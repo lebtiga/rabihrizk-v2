@@ -3,6 +3,10 @@ import { FiUsers, FiTool, FiTrendingUp, FiPlayCircle, FiCalendar } from 'react-i
 import { HiLightBulb } from 'react-icons/hi';
 
 export default function Hero() {
+  const handleVideoClick = () => {
+    window.open('https://www.youtube.com/watch?v=xWvpkf6FfvA', '_blank');
+  };
+
   return (
     <div className="min-h-screen bg-[#0A051E] py-32">
       <div className="container mx-auto px-4">
@@ -50,15 +54,24 @@ export default function Hero() {
           <div className="lg:col-span-2 w-full bg-white/5 rounded-3xl p-6 backdrop-blur-sm">
             <div className="flex flex-col md:flex-row items-start gap-6">
               <div className="w-full md:w-2/3">
-                <div className="relative aspect-video rounded-2xl overflow-hidden border border-blue-500/20 shadow-lg shadow-blue-500/10 group">
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent group-hover:opacity-0 transition-opacity"></div>
-                  <iframe
-                    src="https://www.youtube.com/embed/xWvpkf6FfvA"
-                    title="Legiit Live 2024 - Rabih Rizk"
-                    className="w-full h-full"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  ></iframe>
+                <div 
+                  className="relative aspect-video rounded-2xl overflow-hidden border border-blue-500/20 shadow-lg shadow-blue-500/10 group cursor-pointer"
+                  onClick={handleVideoClick}
+                >
+                  {/* Thumbnail */}
+                  <img
+                    src="https://img.youtube.com/vi/xWvpkf6FfvA/maxresdefault.jpg"
+                    alt="Video Thumbnail"
+                    className="w-full h-full object-cover"
+                  />
+                  {/* Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent group-hover:bg-black/40 transition-all duration-300">
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-20 h-20 flex items-center justify-center rounded-full bg-blue-500/20 border border-blue-500/40 group-hover:scale-110 transition-transform duration-300">
+                        <FiPlayCircle className="w-10 h-10 text-white" />
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div className="w-full md:w-1/3 space-y-4">
@@ -88,20 +101,20 @@ export default function Hero() {
 
             <div className="p-6 rounded-2xl bg-white/5 border border-blue-500/20 hover:bg-white/10 transition-all group">
               <HiLightBulb className="w-8 h-8 text-blue-400 mb-4 group-hover:scale-110 transition-transform" />
-              <div className="text-3xl font-bold text-white mb-2">100+</div>
+              <div className="text-3xl font-bold text-white mb-2">200+</div>
               <div className="text-sm text-gray-400">Projects Completed</div>
             </div>
 
             <div className="p-6 rounded-2xl bg-white/5 border border-blue-500/20 hover:bg-white/10 transition-all group">
-              <FiTool className="w-8 h-8 text-indigo-400 mb-4 group-hover:scale-110 transition-transform" />
-              <div className="text-3xl font-bold text-white mb-2">24</div>
-              <div className="text-sm text-gray-400">AI Tools Built</div>
+              <FiTool className="w-8 h-8 text-purple-400 mb-4 group-hover:scale-110 transition-transform" />
+              <div className="text-3xl font-bold text-white mb-2">15+</div>
+              <div className="text-sm text-gray-400">Years Experience</div>
             </div>
 
             <div className="p-6 rounded-2xl bg-white/5 border border-blue-500/20 hover:bg-white/10 transition-all group">
-              <FiTrendingUp className="w-8 h-8 text-purple-400 mb-4 group-hover:scale-110 transition-transform" />
-              <div className="text-3xl font-bold text-white mb-2">300%</div>
-              <div className="text-sm text-gray-400">Faster Development</div>
+              <FiTrendingUp className="w-8 h-8 text-pink-400 mb-4 group-hover:scale-110 transition-transform" />
+              <div className="text-3xl font-bold text-white mb-2">100%</div>
+              <div className="text-sm text-gray-400">Client Satisfaction</div>
             </div>
           </div>
         </div>
