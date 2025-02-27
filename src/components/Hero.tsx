@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Users, Tool, TrendingUp, PlayCircle, Lightbulb } from 'lucide-react';
+import { Users, Wrench, TrendingUp, PlayCircle, Lightbulb } from 'lucide-react';
 
 export default function EnhancedHero() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -145,7 +145,7 @@ export default function EnhancedHero() {
                   ease: "easeInOut"
                 }}
               >
-                <Tool className="w-8 h-8 text-blue-400" />
+                <Wrench className="w-8 h-8 text-blue-400" />
               </motion.div>
               
               <motion.div 
@@ -263,10 +263,10 @@ export default function EnhancedHero() {
             transition={{ duration: 0.8, delay: 1.2 }}
           >
             {[
-              { icon: FiUsers, number: "500+", label: "Happy Clients", color: "cyan" },
-              { icon: HiLightBulb, number: "200+", label: "Projects Completed", color: "blue" },
-              { icon: FiTool, number: "15+", label: "Years Experience", color: "purple" },
-              { icon: FiTrendingUp, number: "100%", label: "Client Satisfaction", color: "pink" }
+              { icon: Users, number: "500+", label: "Happy Clients", color: "cyan" },
+              { icon: Lightbulb, number: "200+", label: "Projects Completed", color: "blue" },
+              { icon: Wrench, number: "15+", label: "Years Experience", color: "purple" },
+              { icon: TrendingUp, number: "100%", label: "Client Satisfaction", color: "pink" }
             ].map((stat, index) => (
               <motion.div 
                 key={index}
