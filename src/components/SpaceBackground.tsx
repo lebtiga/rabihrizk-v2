@@ -1,208 +1,175 @@
 import React, { useEffect, useRef } from 'react';
 
-export default function EnhancedSpaceBackground() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const mousePosition = useRef({ x: 0, y: 0 });
+const EnhancedBackground = () => {
+  const canvasRef = useRef(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
     const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    let animationFrameId: number;
-    let lastTime = 0;
     
-    // Track mouse position for interactive effects
-    const handleMouseMove = (e: MouseEvent) => {
-      mousePosition.current = {
-        x: e.clientX,
-        y: e.clientY
-      };
-    };
-    
-    window.addEventListener('mousemove', handleMouseMove);
-
-    // Set canvas dimensions
-    const setCanvasSize = () => {
+    // Set canvas size
+    const handleResize = () => {
       canvas.width = window.innerWidth;
       canvas.height = Math.max(
-        window.innerHeight,
-        document.documentElement.scrollHeight
+        document.documentElement.scrollHeight,
+        window.innerHeight
       );
     };
-
-    setCanvasSize();
-    window.addEventListener('resize', setCanvasSize);
-    window.addEventListener('scroll', setCanvasSize);
-
-    // Star properties
-    const stars: Array<{
-      x: number;
-      y: number;
-      size: number;
-      speed: number;
-      color: string;
-      twinkleSpeed: number;
-      twinkleState: number;
-    }> = [];
     
-    // Nebula clouds
-    const nebulae: Array<{
-      x: number;
-      y: number;
-      radius: number;
-      color: string;
-      opacity: number;
-      speed: number;
-    }> = [];
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    document.addEventListener('scroll', handleResize);
+
+    // Initialize particles
+    const particlesArray = [];
+    const particleCount = Math.min(120, Math.floor(window.innerWidth * 0.08));  // Responsive particle count
+    const particleBaseSize = Math.max(1, Math.min(3, window.innerWidth / 1000)); // Responsive size
     
-    // Create stars with varied properties
-    const createStars = () => {
-      const numStars = Math.floor(canvas.width * canvas.height / 5000); // Responsive star count
-      
-      for (let i = 0; i < numStars; i++) {
-        // Generate colors from blue to purple spectrum
-        const hue = Math.random() * 60 + 220; // 220-280 range (blue to purple)
-        const saturation = 70 + Math.random() * 30; // 70-100%
-        const lightness = 70 + Math.random() * 30; // 70-100%
-        
-        stars.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          size: Math.random() * 2 + 0.5, // 0.5 to 2.5
-          speed: 0.05 + Math.random() * 0.2,
-          color: `hsla(${hue}, ${saturation}%, ${lightness}%, 1)`,
-          twinkleSpeed: 0.01 + Math.random() * 0.02,
-          twinkleState: Math.random() * Math.PI * 2 // Random starting phase
-        });
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * particleBaseSize + 0.5;
+        this.speedX = (Math.random() - 0.5) * 0.3;
+        this.speedY = (Math.random() - 0.5) * 0.3;
+        this.color = this.getRandomColor();
+        this.opacity = Math.random() * 0.5 + 0.1;
+        this.pulsating = Math.random() > 0.8; // Some particles will pulsate
+        this.pulseSpeed = 0.03 + Math.random() * 0.03;
+        this.pulseDirection = 1;
+        this.pulseSize = this.size;
       }
-    };
-    
-    // Create nebula clouds
-    const createNebulae = () => {
-      const numNebulae = 5;
       
-      for (let i = 0; i < numNebulae; i++) {
-        const hue = Math.random() * 60 + 220; // Blue to purple
-        nebulae.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          radius: 100 + Math.random() * 200,
-          color: `hsla(${hue}, 70%, 50%, 0.05)`,
-          opacity: 0.03 + Math.random() * 0.05,
-          speed: 0.1 + Math.random() * 0.1
-        });
+      getRandomColor() {
+        const colors = [
+          [59, 130, 246],   // blue-500
+          [99, 102, 241],   // indigo-500
+          [139, 92, 246],   // purple-500
+          [14, 165, 233],   // sky-500
+          [6, 182, 212]     // cyan-500
+        ];
+        
+        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+        return `rgba(${randomColor[0]}, ${randomColor[1]}, ${randomColor[2]}, ${this.opacity})`;
       }
-    };
-    
-    createStars();
-    createNebulae();
 
-    // Animation loop
-    const animate = (timestamp: number) => {
-      const deltaTime = timestamp - lastTime;
-      lastTime = timestamp;
-      
-      // Clear canvas with semi-transparent background for trail effect
-      ctx.fillStyle = 'rgba(10, 5, 30, 0.1)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      
-      // Draw nebulae
-      nebulae.forEach(nebula => {
-        const gradient = ctx.createRadialGradient(
-          nebula.x, nebula.y, 0,
-          nebula.x, nebula.y, nebula.radius
-        );
-        gradient.addColorStop(0, nebula.color.replace('0.05', String(nebula.opacity)));
-        gradient.addColorStop(1, 'rgba(10, 5, 30, 0)');
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
         
-        ctx.fillStyle = gradient;
-        ctx.beginPath();
-        ctx.arc(nebula.x, nebula.y, nebula.radius, 0, Math.PI * 2);
-        ctx.fill();
+        // Bounce off edges
+        if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
         
-        // Move nebula
-        nebula.y -= nebula.speed * (deltaTime / 16);
-        
-        // Reset position if nebula moves off screen
-        if (nebula.y + nebula.radius < 0) {
-          nebula.y = canvas.height + nebula.radius;
-          nebula.x = Math.random() * canvas.width;
+        // Pulsating effect for some particles
+        if (this.pulsating) {
+          this.pulseSize += this.pulseDirection * this.pulseSpeed;
+          
+          if (this.pulseSize > this.size * 1.5) {
+            this.pulseDirection = -1;
+          } else if (this.pulseSize < this.size * 0.5) {
+            this.pulseDirection = 1;
+          }
         }
-      });
+      }
 
-      // Draw and update stars
-      stars.forEach(star => {
-        // Update twinkle state
-        star.twinkleState += star.twinkleSpeed * (deltaTime / 16);
-        
-        // Calculate opacity based on twinkle state
-        const opacity = 0.5 + Math.sin(star.twinkleState) * 0.5;
-        
-        // Draw star with glow effect
-        const gradient = ctx.createRadialGradient(
-          star.x, star.y, 0,
-          star.x, star.y, star.size * 2
-        );
-        
-        gradient.addColorStop(0, star.color);
-        gradient.addColorStop(1, 'rgba(10, 5, 30, 0)');
-        
-        ctx.globalAlpha = opacity;
-        ctx.fillStyle = gradient;
+      draw() {
         ctx.beginPath();
-        ctx.arc(star.x, star.y, star.size + Math.sin(star.twinkleState) * 0.5, 0, Math.PI * 2);
+        ctx.arc(this.x, this.y, this.pulsating ? this.pulseSize : this.size, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
         ctx.fill();
-        ctx.globalAlpha = 1.0;
-        
-        // Move star
-        star.y -= star.speed * (deltaTime / 16);
-        
-        // Interactive effect - stars move away slightly from cursor
-        const dx = star.x - mousePosition.current.x;
-        const dy = star.y - mousePosition.current.y;
+      }
+    }
+
+    function createParticles() {
+      for (let i = 0; i < particleCount; i++) {
+        particlesArray.push(new Particle());
+      }
+    }
+    
+    function connectParticles() {
+      const maxDistance = 150 * (window.innerWidth / 1920); // Responsive connection distance
+      
+      for (let a = 0; a < particlesArray.length; a++) {
+        for (let b = a; b < particlesArray.length; b++) {
+          const dx = particlesArray[a].x - particlesArray[b].x;
+          const dy = particlesArray[a].y - particlesArray[b].y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          
+          if (distance < maxDistance) {
+            // Calculate line opacity based on distance
+            const opacity = 1 - (distance / maxDistance);
+            ctx.strokeStyle = `rgba(59, 130, 246, ${opacity * 0.15})`;
+            ctx.lineWidth = 0.5;
+            ctx.beginPath();
+            ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+            ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+            ctx.stroke();
+          }
+        }
+      }
+    }
+    
+    // Animation
+    function animate() {
+      requestAnimationFrame(animate);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      // Update and draw particles
+      for (let i = 0; i < particlesArray.length; i++) {
+        particlesArray[i].update();
+        particlesArray[i].draw();
+      }
+      
+      connectParticles();
+    }
+    
+    createParticles();
+    animate();
+    
+    // Mousemove effect
+    const mouseMoveHandler = (e) => {
+      const mouseX = e.clientX;
+      const mouseY = e.clientY + window.scrollY;
+      
+      // Push particles away from mouse
+      for (let i = 0; i < particlesArray.length; i++) {
+        const dx = particlesArray[i].x - mouseX;
+        const dy = particlesArray[i].y - mouseY;
         const distance = Math.sqrt(dx * dx + dy * dy);
         
         if (distance < 100) {
           const angle = Math.atan2(dy, dx);
-          const force = (100 - distance) / 2000;
-          star.x += Math.cos(angle) * force * (deltaTime / 16);
-          star.y += Math.sin(angle) * force * (deltaTime / 16);
+          const force = (100 - distance) / 100;
+          
+          particlesArray[i].speedX += Math.cos(angle) * force * 0.5;
+          particlesArray[i].speedY += Math.sin(angle) * force * 0.5;
         }
-        
-        // Reset position if star moves off screen
-        if (star.y < -10) {
-          star.y = canvas.height + 10;
-          star.x = Math.random() * canvas.width;
-          star.twinkleState = Math.random() * Math.PI * 2;
-        }
-      });
-
-      animationFrameId = requestAnimationFrame(animate);
+      }
     };
-
-    lastTime = performance.now();
-    animate(lastTime);
-
+    
+    document.addEventListener('mousemove', mouseMoveHandler);
+    
+    // Cleanup
     return () => {
-      window.removeEventListener('resize', setCanvasSize);
-      window.removeEventListener('scroll', setCanvasSize);
-      window.removeEventListener('mousemove', handleMouseMove);
-      cancelAnimationFrame(animationFrameId);
+      window.removeEventListener('resize', handleResize);
+      document.removeEventListener('scroll', handleResize);
+      document.removeEventListener('mousemove', mouseMoveHandler);
     };
   }, []);
 
   return (
     <canvas
       ref={canvasRef}
-      className="fixed top-0 left-0 w-full h-full pointer-events-none"
-      style={{
-        background: 'linear-gradient(to bottom, #0A051E, #120A2E)',
-        opacity: 0.6,
-        zIndex: -1
+      className="fixed top-0 left-0 w-full h-full z-0 pointer-events-none"
+      style={{ 
+        background: 'linear-gradient(to bottom, #0A051E, #0F0A2A)',
+        opacity: 0.8
       }}
     />
   );
-}
+};
+
+export default EnhancedBackground;
