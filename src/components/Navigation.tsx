@@ -80,18 +80,71 @@ export default function EnhancedNavbar() {
               whileHover={{ scale: 1.05 }}
               transition={{ type: 'spring', stiffness: 400, damping: 10 }}
             >
-              <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full opacity-70 blur-md group-hover:opacity-100 transition-all duration-300"></div>
-                <div className="relative w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center border border-blue-400/30">
-                  <span className="font-bold text-white text-xl">R</span>
+              <div className="relative w-12 h-12">
+                {/* Animated background rings */}
+                <motion.div
+                  className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 opacity-75"
+                  animate={{
+                    scale: [1, 1.2, 1],
+                    opacity: [0.5, 0.8, 0.5],
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
+                <motion.div
+                  className="absolute inset-0 rounded-full border-2 border-blue-400/30"
+                  animate={{ rotate: 360 }}
+                  transition={{
+                    duration: 8,
+                    repeat: Infinity,
+                    ease: "linear"
+                  }}
+                />
+                {/* Main logo container */}
+                <div className="relative w-full h-full bg-gradient-to-br from-blue-600 to-purple-600 rounded-full flex items-center justify-center overflow-hidden">
+                  {/* Animated gradient overlay */}
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"
+                    animate={{
+                      x: ['-100%', '100%'],
+                    }}
+                    transition={{
+                      duration: 1.5,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      repeatDelay: 3
+                    }}
+                  />
+                  {/* Inner glow */}
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-400/20 to-purple-400/20 blur-sm" />
+                  {/* Logo text */}
+                  <span className="relative font-bold text-white text-2xl font-display tracking-wider">
+                    R
+                  </span>
+                  {/* Decorative dots */}
+                  <motion.div
+                    className="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-blue-300"
+                    animate={{
+                      scale: [1, 1.5, 1],
+                      opacity: [0.5, 1, 0.5],
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  />
                 </div>
               </div>
               <div className="flex flex-col">
-                <span className="text-white font-bold text-xl tracking-tight group-hover:text-blue-400 transition-colors">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 font-bold text-xl tracking-tight group-hover:scale-105 transition-transform">
                   Rabih Rizk
                 </span>
-                <span className="text-blue-500 text-xs tracking-wider">
-                  AI-POWERED CREATOR
+                <span className="text-xs tracking-wider uppercase bg-gradient-to-r from-blue-400/80 to-purple-400/80 text-transparent bg-clip-text font-semibold">
+                  AI-POWERED ENTREPRENEUR
                 </span>
               </div>
             </motion.a>
@@ -122,10 +175,9 @@ export default function EnhancedNavbar() {
               ))}
               
               <motion.a
-                href="#contact"
+                href="mailto:rob@rizkadvertising.com?subject=Let's discuss your project"
                 onClick={(e) => {
-                  e.preventDefault();
-                  scrollTo('contact');
+                  // Allow default email behavior
                 }}
                 className="ml-2 px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg text-white font-medium shadow-lg shadow-blue-700/20"
                 whileHover={{ 
@@ -210,10 +262,8 @@ export default function EnhancedNavbar() {
                 
                 <div className="mt-auto">
                   <a
-                    href="#contact"
+                    href="mailto:rob@rizkadvertising.com?subject=Let's discuss your project"
                     onClick={(e) => {
-                      e.preventDefault();
-                      scrollTo('contact');
                       setIsMenuOpen(false);
                     }}
                     className="block w-full p-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg text-white font-medium text-center shadow-lg shadow-blue-700/20"

@@ -210,7 +210,7 @@ export default function EnhancedProjects() {
           transition={{ duration: 0.6, delay: 0.3 }}
         >
           <a
-            href="#contact"
+            href="mailto:rob@rizkadvertising.com?subject=Custom Solution Inquiry"
             className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg text-white font-medium shadow-lg shadow-blue-700/20 hover:shadow-blue-700/40 transition-all duration-300"
           >
             Need a Custom Solution?

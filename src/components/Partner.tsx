@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import { Users, TrendingUp, Shield } from 'lucide-react';
 
 const features = [
@@ -23,60 +24,96 @@ export default function Partner() {
   return (
     <section id="partner" className="py-24 bg-[#0A051E]">
       <div className="container mx-auto px-4">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-4xl font-bold text-white mb-4">
+        <motion.div 
+          className="text-center max-w-3xl mx-auto mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          <h2 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 mb-4">
             Partner With Us
           </h2>
-          <p className="text-gray-400 text-lg">
+          <p className="text-gray-300 text-lg">
             Looking for influencers and industry leaders to create impactful partnerships. Our proven track record shows significant growth for our partners.
           </p>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+        <motion.div 
+          className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={{
+            visible: {
+              transition: {
+                staggerChildren: 0.2
+              }
+            }
+          }}
+        >
           {features.map((feature, i) => (
-            <div
+            <motion.div
               key={i}
-              className="p-8 rounded-xl bg-slate-800/10 backdrop-blur-sm border border-slate-700/50"
+              variants={{
+                hidden: { y: 20, opacity: 0 },
+                visible: {
+                  y: 0,
+                  opacity: 1,
+                  transition: {
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 24
+                  }
+                }
+              }}
+              whileHover={{ y: -5, scale: 1.02 }}
+              className="p-8 rounded-2xl bg-gradient-to-br from-blue-500/10 to-purple-500/10 backdrop-blur-xl border border-blue-500/20 hover:border-blue-500/40 transition-all duration-500 group"
             >
-              <div className="mb-4">
+              <motion.div 
+                className="mb-6 text-blue-400"
+                whileHover={{ scale: 1.1, rotate: 5 }}
+                transition={{ type: "spring", stiffness: 400, damping: 10 }}
+              >
                 {feature.icon}
-              </div>
-              <h3 className="text-xl font-semibold text-white mb-3">
+              </motion.div>
+              <h3 className="text-2xl font-bold text-white mb-3">
                 {feature.title}
               </h3>
-              <p className="text-gray-400">
+              <p className="text-gray-300">
                 {feature.description}
               </p>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
-        <div className="max-w-3xl mx-auto text-center bg-slate-800/20 backdrop-blur-sm rounded-xl p-8 border border-slate-700/50">
+        <motion.div 
+          className="max-w-3xl mx-auto text-center bg-gradient-to-br from-blue-500/10 to-purple-500/10 backdrop-blur-xl rounded-2xl p-12 border border-blue-500/20"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
           <h3 className="text-2xl font-bold text-white mb-4">
             Ready to Scale Together?
           </h3>
-          <p className="text-gray-400 mb-8">
+          <p className="text-gray-300 text-lg mb-8">
             Join our growing network of successful partnerships. We've helped influencers and industry leaders achieve remarkable growth through strategic collaboration.
           </p>
-          <a
-            href="#contact"
-            className="inline-flex items-center px-6 py-3 rounded-lg bg-blue-500 hover:bg-blue-600 text-white font-medium transition-colors"
+          <motion.a
+            href="mailto:rob@rizkadvertising.com?subject=Partnership Inquiry"
+            className="inline-flex items-center px-8 py-4 rounded-xl bg-gradient-to-r from-blue-500 to-purple-600 text-white font-medium shadow-lg shadow-blue-500/20 hover:shadow-blue-500/40 transition-all duration-300"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
             Let's Connect
-            <svg 
-              className="w-4 h-4 ml-2" 
-              viewBox="0 0 24 24" 
-              fill="none" 
-              stroke="currentColor" 
-              strokeWidth="2" 
-              strokeLinecap="round" 
-              strokeLinejoin="round"
+            <motion.span
+              className="ml-2"
+              animate={{ x: [0, 5, 0] }}
+              transition={{ repeat: Infinity, duration: 1.5 }}
             >
-              <path d="M5 12h14" />
-              <path d="M12 5l7 7-7 7" />
-            </svg>
-          </a>
-        </div>
+              →
+            </motion.span>
+          </motion.a>
+        </motion.div>
       </div>
     </section>
   );

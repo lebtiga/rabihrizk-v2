@@ -59,7 +59,8 @@ export default function EnhancedHero() {
 
       {/* Main content */}
       <div className="container mx-auto px-4 py-32 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+        <div className="flex flex-col max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}
           <motion.div 
             className="flex flex-col items-start space-y-8"
@@ -73,7 +74,7 @@ export default function EnhancedHero() {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.4 }}
             >
-              <span className="text-blue-400 font-medium">AI-Powered Creator</span>
+              <span className="text-blue-400 font-medium">AI-Powered Entrepreneur</span>
             </motion.div>
 
             <motion.h1 
@@ -83,7 +84,7 @@ export default function EnhancedHero() {
               transition={{ duration: 0.6, delay: 0.6 }}
             >
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
-                Hey there! 👋
+                Transforming Ideas Into Digital Success
               </span>
             </motion.h1>
 
@@ -94,21 +95,41 @@ export default function EnhancedHero() {
               transition={{ duration: 0.6, delay: 0.8 }}
             >
               <p>
-                Remember when people said AI couldn't be creative? Well, I'm here to prove them wrong! I've found an amazing way to team up with AI to build incredible things faster than ever before.
+                I specialize in building AI-powered SaaS solutions that automate workflows, increase efficiency, and drive business growth. With over 15 years of experience, I've helped 500+ clients transform their digital presence.
               </p>
               <p>
-                Think of it like having a super-smart assistant that helps me create awesome websites and apps at lightning speed. But don't worry - there's still a human (that's me & my team!) making sure everything looks perfect and works just right.
+                My unique approach combines cutting-edge AI technology with proven business strategies to deliver solutions that are 3x faster to market and 70% more cost-effective than traditional development methods.
               </p>
             </motion.div>
 
             <motion.div 
-              className="flex space-x-4"
+              className="flex flex-col sm:flex-row gap-4"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 1 }}
             >
+              <div className="flex flex-col gap-2 p-4 rounded-xl bg-blue-500/10 border border-blue-500/30">
+                <h3 className="text-white font-semibold">What I Do</h3>
+                <p className="text-sm text-gray-400">Build AI-powered SaaS solutions that automate and scale your business</p>
+              </div>
+              <div className="flex flex-col gap-2 p-4 rounded-xl bg-purple-500/10 border border-purple-500/30">
+                <h3 className="text-white font-semibold">How I Do It</h3>
+                <p className="text-sm text-gray-400">Combine AI technology with proven business strategies for rapid development</p>
+              </div>
+              <div className="flex flex-col gap-2 p-4 rounded-xl bg-cyan-500/10 border border-cyan-500/30">
+                <h3 className="text-white font-semibold">Why Choose Me</h3>
+                <p className="text-sm text-gray-400">15+ years experience, 500+ satisfied clients, proven ROI results</p>
+              </div>
+            </motion.div>
+
+            <motion.div 
+              className="flex space-x-4 mt-8"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 1.2 }}
+            >
               <a 
-                href="#contact" 
+                href="mailto:rob@rizkadvertising.com?subject=Let's Connect"
                 className="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg text-white font-medium hover:from-blue-600 hover:to-purple-700 transition-all duration-300 shadow-lg shadow-blue-500/20 hover:shadow-blue-500/40"
               >
                 Let's Connect
@@ -199,10 +220,11 @@ export default function EnhancedHero() {
               </motion.div>
             </div>
           </motion.div>
+          </div>
 
           {/* Video Section */}
           <motion.div 
-            className="lg:col-span-2 w-full bg-white/5 rounded-3xl p-6 backdrop-blur-sm border border-white/10"
+            className="lg:col-span-2 w-full bg-white/5 rounded-3xl p-6 backdrop-blur-sm border border-white/10 mt-24"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1 }}
@@ -257,7 +279,7 @@ export default function EnhancedHero() {
 
           {/* Stats Grid */}
           <motion.div 
-            className="lg:col-span-2 grid grid-cols-2 md:grid-cols-4 gap-6 w-full mt-12"
+            className="lg:col-span-2 grid grid-cols-2 md:grid-cols-4 gap-6 w-full mt-24"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1.2 }}
