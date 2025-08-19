@@ -1,25 +1,22 @@
 import React from 'react';
-import Hero from './components/Hero';
-import Services from './components/Services';
-import Technologies from './components/Technologies';
-import Projects from './components/Projects';
-import Partner from './components/Partner';
-import Contact from './components/Contact';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import HomePage from './components/HomePage';
+import AKAWireframe from './components/AKAWireframe';
 import SpaceBackground from './components/SpaceBackground';
 import Navigation from './components/Navigation';
 
 function App() {
   return (
-    <div className="relative">
-      <SpaceBackground />
-      <Navigation />
-      <Hero />
-      <Services />
-      <Technologies />
-      <Projects />
-      <Partner />
-      <Contact />
-    </div>
+    <Router>
+      <div className="relative">
+        <SpaceBackground />
+        <Navigation />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/aka-seo-wireframe" element={<AKAWireframe />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 

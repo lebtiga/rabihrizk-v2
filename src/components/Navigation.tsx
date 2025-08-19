@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ChevronRight } from 'lucide-react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 export default function EnhancedNavbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
+  const location = useLocation();
+  const navigate = useNavigate();
+  const isHomePage = location.pathname === '/';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,12 +36,13 @@ export default function EnhancedNavbar() {
   }, []);
 
   const navigationItems = [
-    { name: 'Home', id: 'hero' },
-    { name: 'Services', id: 'services' },
-    { name: 'Tech Stack', id: 'technologies' },
-    { name: 'Projects', id: 'projects' },
-    { name: 'Partner', id: 'partner' },
-    { name: 'Contact', id: 'contact' }
+    { name: 'Home', id: 'hero', type: 'scroll' },
+    { name: 'Services', id: 'services', type: 'scroll' },
+    { name: 'Tech Stack', id: 'technologies', type: 'scroll' },
+    { name: 'Projects', id: 'projects', type: 'scroll' },
+    { name: 'AKA Framework', id: '/aka-seo-wireframe', type: 'link' },
+    { name: 'Partner', id: 'partner', type: 'scroll' },
+    { name: 'Contact', id: 'contact', type: 'scroll' }
   ];
 
   const scrollTo = (id) => {
@@ -70,12 +75,14 @@ export default function EnhancedNavbar() {
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <motion.a 
-              href="#hero" 
-              className="flex items-center space-x-3 group"
-              onClick={(e) => {
-                e.preventDefault();
-                scrollTo('hero');
+            <motion.div 
+              className="flex items-center space-x-3 group cursor-pointer"
+              onClick={() => {
+                if (!isHomePage) {
+                  navigate('/');
+                } else {
+                  scrollTo('hero');
+                }
               }}
               whileHover={{ scale: 1.05 }}
               transition={{ type: 'spring', stiffness: 400, damping: 10 }}
@@ -147,32 +154,60 @@ export default function EnhancedNavbar() {
                   AI-POWERED ENTREPRENEUR
                 </span>
               </div>
-            </motion.a>
+            </motion.div>
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-1">
-              {navigationItems.map((item) => (
-                <motion.button
-                  key={item.id}
-                  onClick={() => scrollTo(item.id)}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium relative ${
-                    activeSection === item.id
-                      ? 'text-white'
-                      : 'text-gray-400 hover:text-white'
-                  } transition-colors`}
-                  whileHover={{ scale: 1.05 }}
-                  transition={{ type: 'spring', stiffness: 400, damping: 17 }}
-                >
-                  {item.name}
-                  {activeSection === item.id && (
-                    <motion.div
-                      layoutId="activeSection"
-                      className="absolute inset-0 bg-blue-500/10 rounded-lg -z-10 border border-blue-500/30"
-                      transition={{ type: 'spring', duration: 0.6 }}
-                    />
-                  )}
-                </motion.button>
-              ))}
+              {navigationItems.map((item) => {
+                if (item.type === 'link') {
+                  return (
+                    <Link
+                      key={item.id}
+                      to={item.id}
+                      className={`px-4 py-2 rounded-lg text-sm font-medium relative ${
+                        location.pathname === item.id
+                          ? 'text-white bg-blue-500/10 border border-blue-500/30'
+                          : 'text-gray-400 hover:text-white'
+                      } transition-colors`}
+                    >
+                      {item.name}
+                    </Link>
+                  );
+                }
+                
+                // For scroll items, only show on homepage
+                if (!isHomePage && item.id !== 'hero') return null;
+                
+                return (
+                  <motion.button
+                    key={item.id}
+                    onClick={() => {
+                      if (!isHomePage) {
+                        navigate('/');
+                        setTimeout(() => scrollTo(item.id), 100);
+                      } else {
+                        scrollTo(item.id);
+                      }
+                    }}
+                    className={`px-4 py-2 rounded-lg text-sm font-medium relative ${
+                      activeSection === item.id && isHomePage
+                        ? 'text-white'
+                        : 'text-gray-400 hover:text-white'
+                    } transition-colors`}
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+                  >
+                    {item.name}
+                    {activeSection === item.id && isHomePage && (
+                      <motion.div
+                        layoutId="activeSection"
+                        className="absolute inset-0 bg-blue-500/10 rounded-lg -z-10 border border-blue-500/30"
+                        transition={{ type: 'spring', duration: 0.6 }}
+                      />
+                    )}
+                  </motion.button>
+                );
+              })}
               
               <motion.a
                 href="mailto:rob@rizkadvertising.com?subject=Let's discuss your project"
@@ -242,22 +277,53 @@ export default function EnhancedNavbar() {
                 </div>
                 
                 <div className="flex flex-col space-y-1">
-                  {navigationItems.map((item) => (
-                    <motion.button
-                      key={item.id}
-                      onClick={() => scrollTo(item.id)}
-                      className={`flex items-center justify-between p-3 rounded-lg text-left ${
-                        activeSection === item.id
-                          ? 'bg-blue-500/10 text-white border border-blue-500/30'
-                          : 'text-gray-400 hover:text-white hover:bg-white/5'
-                      } transition-colors`}
-                      whileHover={{ x: 5 }}
-                      transition={{ type: 'spring', stiffness: 400, damping: 17 }}
-                    >
-                      <span>{item.name}</span>
-                      <ChevronRight className={`w-4 h-4 ${activeSection === item.id ? 'text-blue-400' : 'text-gray-600'}`} />
-                    </motion.button>
-                  ))}
+                  {navigationItems.map((item) => {
+                    if (item.type === 'link') {
+                      return (
+                        <Link
+                          key={item.id}
+                          to={item.id}
+                          onClick={() => setIsMenuOpen(false)}
+                          className={`flex items-center justify-between p-3 rounded-lg text-left ${
+                            location.pathname === item.id
+                              ? 'bg-blue-500/10 text-white border border-blue-500/30'
+                              : 'text-gray-400 hover:text-white hover:bg-white/5'
+                          } transition-colors`}
+                        >
+                          <span>{item.name}</span>
+                          <ChevronRight className={`w-4 h-4 ${location.pathname === item.id ? 'text-blue-400' : 'text-gray-600'}`} />
+                        </Link>
+                      );
+                    }
+                    
+                    // For scroll items, only show on homepage
+                    if (!isHomePage && item.id !== 'hero') return null;
+                    
+                    return (
+                      <motion.button
+                        key={item.id}
+                        onClick={() => {
+                          if (!isHomePage) {
+                            navigate('/');
+                            setIsMenuOpen(false);
+                            setTimeout(() => scrollTo(item.id), 100);
+                          } else {
+                            scrollTo(item.id);
+                          }
+                        }}
+                        className={`flex items-center justify-between p-3 rounded-lg text-left ${
+                          activeSection === item.id && isHomePage
+                            ? 'bg-blue-500/10 text-white border border-blue-500/30'
+                            : 'text-gray-400 hover:text-white hover:bg-white/5'
+                        } transition-colors`}
+                        whileHover={{ x: 5 }}
+                        transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+                      >
+                        <span>{item.name}</span>
+                        <ChevronRight className={`w-4 h-4 ${activeSection === item.id && isHomePage ? 'text-blue-400' : 'text-gray-600'}`} />
+                      </motion.button>
+                    );
+                  })}
                 </div>
                 
                 <div className="mt-auto">
