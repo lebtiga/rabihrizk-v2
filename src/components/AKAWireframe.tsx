@@ -6,18 +6,18 @@ export default function AKAWireframe() {
   const [hoveredLayer, setHoveredLayer] = useState<string | null>(null);
 
   return (
-    <div className="min-h-screen bg-[#0A051E] text-white">
+    <div className="min-h-screen text-white relative z-10">
       {/* Hero Section */}
       <motion.section 
-        className="relative py-20 px-4 overflow-hidden"
+        className="relative pt-32 pb-20 px-4 overflow-hidden"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
       >
         {/* Animated gradient background */}
         <div className="absolute inset-0">
-          <div className="absolute top-20 left-10 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-20 right-10 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+          <div className="absolute top-20 left-10 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-20 right-10 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
         </div>
 
         <div className="container mx-auto max-w-6xl relative z-10">
@@ -46,7 +46,7 @@ export default function AKAWireframe() {
       <section className="py-16 px-4">
         <div className="container mx-auto max-w-4xl">
           <motion.div 
-            className="bg-gradient-to-br from-blue-900/20 to-purple-900/20 rounded-3xl p-8 md:p-12 border border-blue-500/20"
+            className="bg-gradient-to-br from-blue-900/30 to-purple-900/30 backdrop-blur-sm rounded-3xl p-8 md:p-12 border border-blue-500/30"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -118,7 +118,7 @@ export default function AKAWireframe() {
               <motion.line
                 x1="200" y1="100"
                 x2="400" y2="200"
-                stroke={hoveredLayer === 'authority' ? '#60A5FA' : '#374151'}
+                stroke={hoveredLayer === 'authority' ? '#60A5FA' : '#4B5563'}
                 strokeWidth="2"
                 initial={{ pathLength: 0 }}
                 animate={{ pathLength: 1 }}
@@ -127,7 +127,7 @@ export default function AKAWireframe() {
               <motion.line
                 x1="200" y1="100"
                 x2="400" y2="100"
-                stroke={hoveredLayer === 'authority' ? '#60A5FA' : '#374151'}
+                stroke={hoveredLayer === 'authority' ? '#60A5FA' : '#4B5563'}
                 strokeWidth="2"
                 initial={{ pathLength: 0 }}
                 animate={{ pathLength: 1 }}
@@ -136,7 +136,7 @@ export default function AKAWireframe() {
               <motion.line
                 x1="400" y1="200"
                 x2="600" y2="300"
-                stroke={hoveredLayer === 'knowledge' ? '#A78BFA' : '#374151'}
+                stroke={hoveredLayer === 'knowledge' ? '#A78BFA' : '#4B5563'}
                 strokeWidth="2"
                 initial={{ pathLength: 0 }}
                 animate={{ pathLength: 1 }}
@@ -145,7 +145,7 @@ export default function AKAWireframe() {
               <motion.line
                 x1="400" y1="200"
                 x2="600" y2="200"
-                stroke={hoveredLayer === 'knowledge' ? '#A78BFA' : '#374151'}
+                stroke={hoveredLayer === 'knowledge' ? '#A78BFA' : '#4B5563'}
                 strokeWidth="2"
                 initial={{ pathLength: 0 }}
                 animate={{ pathLength: 1 }}
@@ -154,7 +154,7 @@ export default function AKAWireframe() {
               <motion.line
                 x1="400" y1="200"
                 x2="600" y2="100"
-                stroke={hoveredLayer === 'knowledge' ? '#A78BFA' : '#374151'}
+                stroke={hoveredLayer === 'knowledge' ? '#A78BFA' : '#4B5563'}
                 strokeWidth="2"
                 initial={{ pathLength: 0 }}
                 animate={{ pathLength: 1 }}
@@ -312,10 +312,10 @@ export default function AKAWireframe() {
             {/* Layer Descriptions */}
             <div className="grid md:grid-cols-3 gap-6 mt-12">
               <motion.div
-                className={`p-6 rounded-2xl border-2 transition-all cursor-pointer ${
+                className={`p-6 rounded-2xl border-2 transition-all cursor-pointer backdrop-blur-sm ${
                   hoveredLayer === 'authority'
-                    ? 'bg-blue-900/30 border-blue-400 scale-105'
-                    : 'bg-gray-900/30 border-gray-700'
+                    ? 'bg-blue-900/40 border-blue-400 scale-105'
+                    : 'bg-white/5 border-gray-700'
                 }`}
                 onMouseEnter={() => setHoveredLayer('authority')}
                 onMouseLeave={() => setHoveredLayer(null)}
@@ -336,10 +336,10 @@ export default function AKAWireframe() {
               </motion.div>
 
               <motion.div
-                className={`p-6 rounded-2xl border-2 transition-all cursor-pointer ${
+                className={`p-6 rounded-2xl border-2 transition-all cursor-pointer backdrop-blur-sm ${
                   hoveredLayer === 'knowledge'
-                    ? 'bg-purple-900/30 border-purple-400 scale-105'
-                    : 'bg-gray-900/30 border-gray-700'
+                    ? 'bg-purple-900/40 border-purple-400 scale-105'
+                    : 'bg-white/5 border-gray-700'
                 }`}
                 onMouseEnter={() => setHoveredLayer('knowledge')}
                 onMouseLeave={() => setHoveredLayer(null)}
@@ -360,10 +360,10 @@ export default function AKAWireframe() {
               </motion.div>
 
               <motion.div
-                className={`p-6 rounded-2xl border-2 transition-all cursor-pointer ${
+                className={`p-6 rounded-2xl border-2 transition-all cursor-pointer backdrop-blur-sm ${
                   hoveredLayer === 'answer'
-                    ? 'bg-cyan-900/30 border-cyan-400 scale-105'
-                    : 'bg-gray-900/30 border-gray-700'
+                    ? 'bg-cyan-900/40 border-cyan-400 scale-105'
+                    : 'bg-white/5 border-gray-700'
                 }`}
                 onMouseEnter={() => setHoveredLayer('answer')}
                 onMouseLeave={() => setHoveredLayer(null)}
@@ -429,7 +429,7 @@ export default function AKAWireframe() {
             ].map((item, index) => (
               <motion.div
                 key={index}
-                className="bg-gray-900/50 rounded-xl p-6 border border-gray-700 hover:border-blue-500/50 transition-all"
+                className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-gray-700 hover:border-blue-500/50 transition-all hover:bg-white/10"
                 initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
@@ -566,7 +566,7 @@ export default function AKAWireframe() {
             ].map((faq, index) => (
               <motion.div
                 key={index}
-                className="bg-gray-900/50 rounded-xl p-6 border border-gray-700"
+                className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-gray-700 hover:bg-white/10 transition-all"
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
