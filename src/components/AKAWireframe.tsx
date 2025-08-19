@@ -1,12 +1,68 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { Helmet } from 'react-helmet-async';
 import { Search, Brain, Target, Layers, Building, Sparkles, ArrowRight, BookOpen, Rocket } from 'lucide-react';
 
 export default function AKAWireframe() {
   const [hoveredLayer, setHoveredLayer] = useState<string | null>(null);
 
   return (
-    <div className="min-h-screen text-white relative z-10">
+    <>
+      <Helmet>
+        <title>AKA SEO Wireframe™ by Rabih Rizk - Modern Framework for AI-Era Search</title>
+        <meta name="description" content="Discover the AKA SEO Wireframe created by Rabih Rizk. A revolutionary three-layer framework (Authority, Knowledge, Answer) designed for dominating modern search and AI systems. Learn how to implement this proven SEO strategy." />
+        <meta name="keywords" content="AKA SEO Wireframe, Rabih Rizk, SEO framework, AI SEO, Authority pages, Knowledge pages, Answer pages, modern SEO strategy, search engine optimization, Rabih Rizk SEO" />
+        <meta name="author" content="Rabih Rizk" />
+        
+        {/* Open Graph Tags */}
+        <meta property="og:title" content="AKA SEO Wireframe™ by Rabih Rizk - Revolutionary SEO Framework" />
+        <meta property="og:description" content="Created by Rabih Rizk, the AKA SEO Wireframe is a proven three-layer framework for dominating modern search. Authority, Knowledge, Answer - the blueprint for AI-era SEO success." />
+        <meta property="og:url" content="https://rabihrizk.com/aka-seo-wireframe" />
+        <meta property="og:type" content="article" />
+        <meta property="og:image" content="https://rabihrizk.com/images/aka-seo-wireframe-og.jpg" />
+        
+        {/* Twitter Card Tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="AKA SEO Wireframe™ by Rabih Rizk" />
+        <meta name="twitter:description" content="Revolutionary three-layer SEO framework created by Rabih Rizk for dominating modern search and AI systems." />
+        <meta name="twitter:image" content="https://rabihrizk.com/images/aka-seo-wireframe-twitter.jpg" />
+        <meta name="twitter:creator" content="@RobRizk2020" />
+        
+        {/* Canonical URL */}
+        <link rel="canonical" href="https://rabihrizk.com/aka-seo-wireframe" />
+        
+        {/* Structured Data */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "headline": "AKA SEO Wireframe™ - The Modern Framework for AI-Era Search Visibility",
+            "description": "A revolutionary three-layer SEO framework created by Rabih Rizk for dominating modern search and AI systems",
+            "author": {
+              "@type": "Person",
+              "name": "Rabih Rizk",
+              "url": "https://rabihrizk.com",
+              "sameAs": [
+                "https://x.com/RobRizk2020",
+                "https://www.linkedin.com/in/rabihrizk"
+              ]
+            },
+            "publisher": {
+              "@type": "Person",
+              "name": "Rabih Rizk"
+            },
+            "datePublished": "2024-01-01",
+            "dateModified": new Date().toISOString(),
+            "url": "https://rabihrizk.com/aka-seo-wireframe",
+            "mainEntityOfPage": {
+              "@type": "WebPage",
+              "@id": "https://rabihrizk.com/aka-seo-wireframe"
+            }
+          })}
+        </script>
+      </Helmet>
+      
+      <div className="min-h-screen text-white relative z-10">
       {/* Hero Section */}
       <motion.section 
         className="relative pt-32 pb-20 px-4 overflow-hidden"
@@ -35,8 +91,8 @@ export default function AKAWireframe() {
             <p className="text-xl md:text-2xl text-gray-300 mb-4">
               The Modern Framework for AI-Era Search Visibility
             </p>
-            <p className="text-lg text-gray-400">
-              Created by Rabih Rizk | Battle-tested on Real Businesses | Built for the Future
+            <p className="text-lg text-gray-300">
+              <span className="font-semibold text-blue-400">Created by Rabih Rizk</span> | Battle-tested on Real Businesses | Built for the Future
             </p>
           </motion.div>
         </div>
@@ -53,7 +109,7 @@ export default function AKAWireframe() {
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-6 text-center">
               <Sparkles className="inline-block w-8 h-8 mr-2 text-blue-400" />
-              How I Discovered AKA
+              How Rabih Rizk Discovered the AKA Framework
             </h2>
             
             <div className="space-y-6 text-lg text-gray-300 leading-relaxed">
@@ -509,17 +565,15 @@ export default function AKAWireframe() {
                 Ready to Transform Your SEO?
               </h2>
               <p className="text-xl mb-8 text-gray-100">
-                Join the waitlist for the complete AKA SEO Wireframe guide
+                The complete AKA SEO Wireframe guide by Rabih Rizk
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <motion.button
-                  className="px-8 py-4 bg-white text-gray-900 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-all flex items-center justify-center"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                <motion.div
+                  className="px-8 py-4 bg-white/20 text-white rounded-lg font-semibold text-lg cursor-not-allowed flex items-center justify-center opacity-75"
                 >
                   <BookOpen className="w-5 h-5 mr-2" />
-                  Get the Complete Guide
-                </motion.button>
+                  Coming Soon
+                </motion.div>
                 <motion.a
                   href="mailto:rob@rizkadvertising.com?subject=AKA SEO Wireframe Inquiry"
                   className="px-8 py-4 bg-transparent border-2 border-white text-white rounded-lg font-semibold text-lg hover:bg-white/10 transition-all flex items-center justify-center"
@@ -583,14 +637,18 @@ export default function AKAWireframe() {
       {/* Footer */}
       <footer className="py-12 px-4 border-t border-gray-800">
         <div className="container mx-auto max-w-4xl text-center">
+          <h3 className="text-gray-300 mb-2">
+            The AKA SEO Wireframe™
+          </h3>
           <p className="text-gray-400 mb-4">
-            The AKA SEO Wireframe™ - Created by Rabih Rizk
+            Created by <span className="text-blue-400 font-semibold">Rabih Rizk</span> - AI-Powered Entrepreneur & SEO Expert
           </p>
           <p className="text-sm text-gray-500">
-            © 2024 Rabih Rizk. All rights reserved.
+            © 2024 Rabih Rizk. All rights reserved. | AKA SEO Wireframe™ is a trademark of Rabih Rizk
           </p>
         </div>
       </footer>
     </div>
+    </>
   );
 }
